@@ -33,12 +33,23 @@ class Board {
     this.lists.push(list);
   }
 
+  findList(listId) {
+    return this.lists.find(function(list) { 
+      return listId === list.id;
+    });
+  }
+
+  editList(listId, newTitle) {
+    var list = this.findList(listId);
+    if (list) {
+      list.title = newTitle
+    }
+  }
   addCard(listId, cardText) {
-    this.lists.forEach(function(list) {
-      if (listId === list.id) {
-        list.addCard(cardText);
-      }
-    })
+    var list = this.findList(listId);
+    if (list) {
+      list.addCard(cardText);
+    }
   }
 } 
 
