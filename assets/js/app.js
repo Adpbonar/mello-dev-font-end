@@ -33,6 +33,15 @@ function handleListEdit(event) {
   }
 }
 
+function handleCardEdit(event) {
+  var cardId = Number(event.target.getAttribute('data-id'));
+  var cardText = prompt('New card text') || '';
+  if (cardText.trim()) {
+    board.editCard(cardId, cardText);
+    renderBoard();
+  }
+}
+
 function renderBoard() {
   $boardContainer.innerHTML = '';
   board.lists.forEach(function(list, index) {
@@ -49,10 +58,12 @@ function renderBoard() {
     list.cards.forEach(function(card) {
       var $cardLi = document.createElement('li');
       var $cardButton = document.createElement('button');
-
       $cardButton.textContent = card.text;
+      $cardButton.setAttribute('data-id', card.id);
+      $cardButton.addEventListener('click', handleCardEdit);
       $cardLi.appendChild($cardButton);
       $cardUl.appendChild($cardLi);
+
     });
 
     var $addCardButton = document.createElement('button');
